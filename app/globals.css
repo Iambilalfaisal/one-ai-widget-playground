@@ -1,0 +1,33 @@
+@import 'tailwindcss';
+
+/* Same violet brand scale as the One-AI app. */
+@theme {
+  --color-violet-50: oklch(0.972 0.012 290);
+  --color-violet-100: oklch(0.948 0.022 290);
+  --color-violet-200: oklch(0.9 0.042 290);
+  --color-violet-300: oklch(0.82 0.082 290);
+  --color-violet-400: oklch(0.72 0.135 290);
+  --color-violet-500: oklch(0.62 0.18 290);
+  --color-violet-600: oklch(0.52 0.19 290);
+  --color-violet-700: oklch(0.47 0.19 290);
+  --color-violet-800: oklch(0.41 0.165 290);
+  --color-violet-900: oklch(0.36 0.135 290);
+  --color-violet-950: oklch(0.27 0.1 290);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: oklch(0.985 0.004 285);
+  color: oklch(0.18 0.014 285);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: oklch(0.82 0.082 290 / 0.5);
+}
