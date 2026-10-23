@@ -1,4 +1,5 @@
-export type EnvKey = 'dev' | 'local' | 'custom'
+/** standalone = chat window served by THIS site, API on Dev. dev/local = chat window from that One-AI app. */
+export type EnvKey = 'standalone' | 'dev' | 'local' | 'custom'
 export type ScriptSource = 'local' | 'hosted'
 
 export interface WidgetSettings {
@@ -18,6 +19,12 @@ export interface WidgetSettings {
 }
 
 export const ENVIRONMENTS: Record<Exclude<EnvKey, 'custom'>, { label: string; apiUrl: string; chatUrl: string }> = {
+  standalone: {
+    label: 'Standalone',
+    apiUrl: 'https://one-ai-api-dev.aiimone.com',
+    // Resolved to this site's origin in the browser (see resolveChatUrl).
+    chatUrl: '',
+  },
   dev: {
     label: 'Dev',
     apiUrl: 'https://one-ai-api-dev.aiimone.com',
@@ -30,13 +37,17 @@ export const ENVIRONMENTS: Record<Exclude<EnvKey, 'custom'>, { label: string; ap
   },
 }
 
-const defaultEnv = (process.env.NEXT_PUBLIC_DEFAULT_ENV as EnvKey | undefined) ?? 'dev'
-const startEnv: EnvKey = defaultEnv in ENVIRONMENTS ? defaultEnv : 'dev'
+const defaultEnv = (process.env.NEXT_PUBLIC_DEFAULT_ENV as EnvKey | undefined) ?? 'standalone'
+const startEnv: Exclude<EnvKey, 'custom'> = defaultEnv in ENVIRONMENTS ? (defaultEnv as Exclude<EnvKey, 'custom'>) : 'standalone'
+
+/** Standalone mode serves the chat window from this very site. */
+export const resolveChatUrl = (env: EnvKey, chatUrl: string) =>
+  env === 'standalone' && typeof window !== 'undefined' ? window.location.origin : chatUrl
 
 export const DEFAULT_SETTINGS: WidgetSettings = {
   env: startEnv,
-  apiUrl: ENVIRONMENTS[startEnv as 'dev' | 'local'].apiUrl,
-  chatUrl: ENVIRONMENTS[startEnv as 'dev' | 'local'].chatUrl,
+  apiUrl: ENVIRONMENTS[startEnv].apiUrl,
+  chatUrl: ENVIRONMENTS[startEnv].chatUrl,
   widgetId: process.env.NEXT_PUBLIC_DEFAULT_WIDGET_ID ?? '',
   previewToken: '',
   scriptSource: 'local',

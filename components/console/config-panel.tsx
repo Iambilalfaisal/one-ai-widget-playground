@@ -11,6 +11,7 @@ import { ENVIRONMENTS, LOCALE_OPTIONS, type EnvKey } from '@/lib/config'
 import { cn } from '@/lib/utils'
 
 const ENV_TABS: { key: EnvKey; label: string }[] = [
+  { key: 'standalone', label: ENVIRONMENTS.standalone.label },
   { key: 'dev', label: ENVIRONMENTS.dev.label },
   { key: 'local', label: ENVIRONMENTS.local.label },
   { key: 'custom', label: 'Custom' },
@@ -62,6 +63,13 @@ export function ConfigPanel() {
             ))}
           </div>
         </div>
+
+        <p className="-mt-2 text-xs text-zinc-500">
+          {settings.env === 'standalone' && 'Standalone: the widget loader and chat window are served by this site; only the API is on Dev.'}
+          {settings.env === 'dev' && 'Dev: everything (loader, chat window, API) comes from the Dev One-AI app.'}
+          {settings.env === 'local' && 'Local: everything comes from One-AI running on localhost.'}
+          {settings.env === 'custom' && 'Custom: enter your own API and Chat URLs.'}
+        </p>
 
         <Field label="Widget ID" hint="From the One-AI dashboard: Widgets → your widget → Embed Code.">
           <Input

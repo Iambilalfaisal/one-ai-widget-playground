@@ -1,4 +1,9 @@
 @import 'tailwindcss';
+/* Design tokens the chat window (vendored from One_AI_UI) reads: --border, --text-2, --surface-2, ... */
+@import '../vendor/one-ai-ui/styles/tokens.css';
+
+/* Same dark-variant rule as One_AI_UI, which the chat window's dark: classes rely on. */
+@custom-variant dark (&:is(.dark *));
 
 /* Same violet brand scale as the One-AI app. */
 @theme {

@@ -15,6 +15,7 @@ import {
   DEFAULT_SETTINGS,
   ENVIRONMENTS,
   SETTINGS_STORAGE_KEY,
+  resolveChatUrl,
   trimSlash,
   type EnvKey,
   type WidgetSettings,
@@ -141,9 +142,10 @@ export function WidgetProvider({ children }: { children: ReactNode }) {
       merged.env = env
       if (env !== 'custom') {
         merged.apiUrl = ENVIRONMENTS[env].apiUrl
-        merged.chatUrl = ENVIRONMENTS[env].chatUrl
+        merged.chatUrl = resolveChatUrl(env, ENVIRONMENTS[env].chatUrl)
       }
     }
+    if (merged.env === 'standalone') merged.chatUrl = window.location.origin
     if (params.get('apiUrl')) merged.apiUrl = params.get('apiUrl')!
     if (params.get('chatUrl')) merged.chatUrl = params.get('chatUrl')!
     if (params.get('widgetId')) merged.widgetId = params.get('widgetId')!
@@ -165,7 +167,7 @@ export function WidgetProvider({ children }: { children: ReactNode }) {
   const selectEnv = useCallback(
     (env: EnvKey) => {
       if (env === 'custom') updateSettings({ env })
-      else updateSettings({ env, apiUrl: ENVIRONMENTS[env].apiUrl, chatUrl: ENVIRONMENTS[env].chatUrl })
+      else updateSettings({ env, apiUrl: ENVIRONMENTS[env].apiUrl, chatUrl: resolveChatUrl(env, ENVIRONMENTS[env].chatUrl) })
     },
     [updateSettings],
   )
@@ -189,7 +191,7 @@ export function WidgetProvider({ children }: { children: ReactNode }) {
     const s = settingsRef.current
     const widgetId = s.widgetId.trim()
     const apiUrl = trimSlash(s.apiUrl)
-    const chatUrl = trimSlash(s.chatUrl)
+    const chatUrl = trimSlash(resolveChatUrl(s.env, s.chatUrl))
     const token = ++initToken.current
 
     if (!widgetId || !apiUrl || !chatUrl) {

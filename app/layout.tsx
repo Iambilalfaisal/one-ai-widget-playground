@@ -1,8 +1,5 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { WidgetProvider } from '@/components/widget/widget-provider'
-import { SiteHeader } from '@/components/layout/site-header'
-import { SiteFooter } from '@/components/layout/site-footer'
 import './globals.css'
 
 const geistSans = Geist({ subsets: ['latin'], variable: '--font-geist-sans' })
@@ -14,16 +11,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
+// Shared shell only. The demo site (header, footer, widget loader) lives in
+// app/(site)/layout.tsx; the chat window iframe (app/(embed)) stays bare.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="flex min-h-screen flex-col">
-        <WidgetProvider>
-          <SiteHeader />
-          <main className="flex-1">{children}</main>
-          <SiteFooter />
-        </WidgetProvider>
-      </body>
+    <html lang="en" data-theme="light" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>{children}</body>
     </html>
   )
 }

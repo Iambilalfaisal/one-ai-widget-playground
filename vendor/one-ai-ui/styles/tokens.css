@@ -1,0 +1,155 @@
+:root,
+[data-theme="light"] {
+  /* Backgrounds */
+  --bg:        oklch(0.985 0.004 285);
+  --surface:   oklch(1 0 0);
+  --surface-2: oklch(0.972 0.005 285);
+  --surface-3: oklch(0.945 0.008 285);
+
+  /* Borders */
+  --border:   oklch(0.9 0.008 285 / 75%);
+  --border-2: oklch(0.85 0.01 285 / 85%);
+
+  /* Brand */
+  --primary:      oklch(0.52 0.19 290);
+  --primary-dim:  oklch(0.47 0.19 290);
+  --primary-fg:   #ffffff;
+  --primary-glow: oklch(0.52 0.19 290 / 0.14);
+
+  /* Semantic */
+  --secondary: #0891b2;
+  --success:   #16a34a;
+  --warning:   #d97706;
+  --danger:    #dc2626;
+
+  /* Text */
+  --text-1: oklch(0.18 0.014 285);
+  --text-2: oklch(0.42 0.02 285);
+  --text-3: oklch(0.55 0.015 285);
+
+  /* Spacing */
+  --space-1: 4px;  --space-2: 8px;   --space-3: 12px;
+  --space-4: 16px; --space-5: 20px;  --space-6: 24px;
+  --space-8: 32px; --space-10: 40px; --space-12: 48px;
+
+  /* Radius */
+  --radius-sm: 6px; --radius-md: 8px;
+  --radius-lg: 12px; --radius-xl: 16px;
+
+  /* Type scale (font-size / line-height) */
+  --text-xs:   11px; --text-xs-lh:   16px;
+  --text-sm:   13px; --text-sm-lh:   18px;
+  --text-base: 14px; --text-base-lh: 20px;
+  --text-md:   16px; --text-md-lh:   24px;
+  --text-lg:   18px; --text-lg-lh:   26px;
+  --text-xl:   22px; --text-xl-lh:   30px;
+  --text-2xl:  28px; --text-2xl-lh:  34px;
+
+  /* React Flow minimap mask (area outside the viewport rectangle) */
+  --minimap-mask: rgba(0, 0, 0, 0.06);
+
+  /* Elevation — two soft layers (a tight contact shadow plus a wide, offset
+     ambient one) tinted toward the neutral hue, so depth stays quiet. */
+  --elevation-1: 0 1px 2px oklch(0.2 0.02 285 / 5%), 0 2px 6px -1px oklch(0.2 0.02 285 / 4%);
+  --elevation-2: 0 1px 2px oklch(0.2 0.02 285 / 5%), 0 6px 16px -4px oklch(0.2 0.03 285 / 8%);
+  --elevation-3: 0 2px 4px oklch(0.2 0.02 285 / 5%), 0 14px 32px -8px oklch(0.2 0.04 285 / 14%);
+
+  /* Transitions */
+  --transition-fast: 120ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] {
+  --bg:        oklch(0.13 0.008 285);
+  --surface:   oklch(0.17 0.009 285);
+  --surface-2: oklch(0.2 0.01 285);
+  --surface-3: oklch(0.235 0.011 285);
+  --border:    oklch(1 0 0 / 8%);
+  --border-2:  oklch(1 0 0 / 13%);
+  --minimap-mask: rgba(255, 255, 255, 0.08);
+  --primary:      oklch(0.74 0.13 290);
+  --primary-dim:  oklch(0.66 0.16 290);
+  --primary-glow: oklch(0.6 0.18 290 / 0.24);
+  --text-1: oklch(0.96 0.004 285);
+  --text-2: oklch(0.72 0.012 285);
+  --text-3: oklch(0.58 0.012 285);
+  --elevation-1: 0 1px 2px oklch(0 0 0 / 40%), 0 0 0 1px oklch(1 0 0 / 3%);
+  --elevation-2: 0 6px 18px -4px oklch(0 0 0 / 50%), 0 0 0 1px oklch(1 0 0 / 5%);
+  --elevation-3: 0 16px 36px -8px oklch(0 0 0 / 60%), 0 0 0 1px oklch(1 0 0 / 7%);
+}
+
+@layer components {
+  /* Heading utilities built on the type scale */
+  .text-h1 { font-size: var(--text-2xl); line-height: var(--text-2xl-lh); font-weight: 650; letter-spacing: -0.025em; }
+  .text-h2 { font-size: var(--text-xl);  line-height: var(--text-xl-lh);  font-weight: 650; letter-spacing: -0.018em; }
+  .text-h3 { font-size: var(--text-lg);  line-height: var(--text-lg-lh);  font-weight: 600; letter-spacing: -0.012em; }
+  .text-h4 { font-size: var(--text-md);  line-height: var(--text-md-lh);  font-weight: 600; letter-spacing: -0.008em; }
+}
+
+@layer components {
+  /* Light glass */
+  .glass {
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-radius: var(--radius-lg);
+    box-shadow:
+      0 1px 3px oklch(0 0 0 / 5%),
+      0 4px 16px oklch(0 0 0 / 6%);
+  }
+
+  .glass-hover:hover {
+    border-color: oklch(0.52 0.19 290 / 30%);
+    box-shadow:
+      0 0 0 1px oklch(0.52 0.19 290 / 10%),
+      0 6px 24px oklch(0 0 0 / 8%);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  /* Card elevation tiers */
+  .card-1 {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--elevation-1);
+    transition: box-shadow var(--transition-base), border-color var(--transition-base);
+  }
+  .card-1:hover {
+    box-shadow: var(--elevation-2);
+  }
+
+  .card-2 {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--elevation-2);
+  }
+}
+
+/* Dark glass overrides */
+[data-theme="dark"] .glass {
+  background: oklch(1 0 0 / 3%);
+  border: 1px solid oklch(1 0 0 / 7%);
+  box-shadow:
+    0 0 0 1px oklch(1 0 0 / 3%),
+    0 8px 32px oklch(0 0 0 / 40%);
+}
+
+[data-theme="dark"] .glass-hover:hover {
+  border-color: oklch(0.74 0.13 290 / 25%);
+  box-shadow:
+    0 0 0 1px oklch(0.74 0.13 290 / 12%),
+    0 8px 32px oklch(0 0 0 / 50%);
+}
+
+[data-theme="dark"] .card-1,
+[data-theme="dark"] .card-2 {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--elevation-1);
+}
+[data-theme="dark"] .card-1:hover {
+  border-color: oklch(1 0 0 / 13%);
+  box-shadow: var(--elevation-2);
+}
